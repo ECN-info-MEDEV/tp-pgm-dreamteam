@@ -10,7 +10,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -94,7 +98,7 @@ public class Image {
         
     }
     
-    public void writeImage(String file_name) throws IOException {
+    public void writeImage(String file_name, List pixels) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file_name));
 
         // Écrire l'en-tête PGM
@@ -118,6 +122,26 @@ public class Image {
 
         bw.close();
     }
+    
+    public void createHistogram(String inputPath, String outputPath) throws IOException {
+        // Lire l'image PGM
+
+        // Calculer l'histogramme
+        ArrayList<Integer> histogram = new ArrayList<>(Collections.nCopies(256, 0));
+        for (int pixel : pixels) {
+            histogram.set(pixel, histogram.get(pixel) + 1);
+        }
+
+        // Normaliser l'histogramme pour tenir dans l'image
+        int maxValue = Collections.max(histogram);
+        List<Integer> normalizedHistogram = histogram.stream()
+                .map(value -> (int) ((double) value / maxValue * 255))
+                .collect(Collectors.toList());
+
+        // Écrire l'histogramme dans une nouvelle image PGM
+        writeImage(outputPath, normalizedHistogram);
+    }
+
     
     public void Seuillage(int seuil){
         for(int i=0; i<pixels.size(); i++){
