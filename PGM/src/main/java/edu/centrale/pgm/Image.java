@@ -28,41 +28,81 @@ public class Image {
     
     private ArrayList<Integer> pixels;
 
+    /**
+     *
+     */
     public Image() {
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLargeur() {
         return largeur;
     }
 
+    /**
+     *
+     * @param largeur
+     */
     public void setLargeur(int largeur) {
         this.largeur = largeur;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHauteur() {
         return hauteur;
     }
 
+    /**
+     *
+     * @param hauteur
+     */
     public void setHauteur(int hauteur) {
         this.hauteur = hauteur;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMax_gray() {
         return max_gray;
     }
 
+    /**
+     *
+     * @param max_gray
+     */
     public void setMax_gray(int max_gray) {
         this.max_gray = max_gray;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Integer> getPixels() {
         return pixels;
     }
 
+    /**
+     *
+     * @param pixels
+     */
     public void setPixels(ArrayList<Integer> pixels) {
         this.pixels = pixels;
     }
 
+    /**
+     *
+     * @param file_name
+     * @throws IOException
+     */
     public void readImage(String file_name)throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(file_name));
         
@@ -98,6 +138,12 @@ public class Image {
         
     }
     
+    /**
+     *
+     * @param file_name
+     * @param pixels
+     * @throws IOException
+     */
     public void writeImage(String file_name, List pixels) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file_name));
 
@@ -123,6 +169,12 @@ public class Image {
         bw.close();
     }
     
+    /**
+     *
+     * @param inputPath
+     * @param outputPath
+     * @throws IOException
+     */
     public void createHistogram(String inputPath, String outputPath) throws IOException {
         // Lire l'image PGM
 
@@ -142,7 +194,10 @@ public class Image {
         writeImage(outputPath, normalizedHistogram);
     }
 
-    
+    /**
+     *
+     * @param seuil
+     */
     public void Seuillage(int seuil){
         for(int i=0; i<pixels.size(); i++){
             if(pixels.get(i) <= seuil){
