@@ -5,7 +5,9 @@
 package edu.centrale.pgm;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -91,6 +93,26 @@ public class Image {
         br.close();
         
     }
+    
+    public void writePGM(String file_name) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file_name));
+
+        // Écrire l'en-tête PGM
+        bw.write("P2\n# Image PGM\n" + this.largeur + " " + this.hauteur + "\n255\n");
+
+        // Écrire les pixels
+        for (int i = 0; i < pixels.size(); i++) {
+            bw.write(this.pixels.get(i) + " ");
+            
+            // Ajouter un retour à la ligne toutes les 70 caractères
+            if ((i + 1) % 70 == 0) {
+                bw.write("\n");
+            }
+        }
+
+        bw.close();
+    }
+
     
     
     
