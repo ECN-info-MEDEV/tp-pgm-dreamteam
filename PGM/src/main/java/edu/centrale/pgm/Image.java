@@ -94,23 +94,39 @@ public class Image {
         
     }
     
-    public void writePGM(String file_name) throws IOException {
+    public void writeImage(String file_name) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file_name));
 
         // Écrire l'en-tête PGM
         bw.write("P2\n# Image PGM\n" + this.largeur + " " + this.hauteur + "\n255\n");
+        
+        int nb_car = 0;
 
         // Écrire les pixels
         for (int i = 0; i < pixels.size(); i++) {
-            bw.write(this.pixels.get(i) + " ");
+            nb_car += this.pixels.get(i).toString().length() + 1 ;
+            
             
             // Ajouter un retour à la ligne toutes les 70 caractères
-            if ((i + 1) % 70 == 0) {
+            if (nb_car >= 70) {
                 bw.write("\n");
+                nb_car = 0;
             }
+            
+            bw.write(this.pixels.get(i) + " ");
         }
 
         bw.close();
+    }
+    
+    public void Seuillage(int seuil){
+        for(int i=0; i<pixels.size(); i++){
+            if(pixels.get(i) <= seuil){
+                pixels.set(i, 0);
+            } else {
+                pixels.set(i, 255);
+            }
+        }
     }
 
     
