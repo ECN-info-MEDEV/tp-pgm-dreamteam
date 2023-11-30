@@ -7,6 +7,8 @@ package edu.centrale.pgm;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -18,20 +20,52 @@ public class Image {
     
     private int max_gray;
     
-    private int[] pixels;
+    private ArrayList<Integer> pixels;
 
     public Image() {
     }
-    
+
+    public int getLargeur() {
+        return largeur;
+    }
+
+    public void setLargeur(int largeur) {
+        this.largeur = largeur;
+    }
+
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    public void setHauteur(int hauteur) {
+        this.hauteur = hauteur;
+    }
+
+    public int getMax_gray() {
+        return max_gray;
+    }
+
+    public void setMax_gray(int max_gray) {
+        this.max_gray = max_gray;
+    }
+
+    public ArrayList<Integer> getPixels() {
+        return pixels;
+    }
+
+    public void setPixels(ArrayList<Integer> pixels) {
+        this.pixels = pixels;
+    }
+
     public void readImage(String file_name)throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(file_name));
         
         // Lire l'en-tête PGM
         br.readLine(); // P2
         br.readLine(); // Commentaire
-        String[] dimensions = br.readLine().split(" ");
-        int width = Integer.parseInt(dimensions[0]);
-        int height = Integer.parseInt(dimensions[1]);
+        StringTokenizer tokenizer = new StringTokenizer(br.readLine());
+        int width = Integer.parseInt(tokenizer.nextToken());
+        int height = Integer.parseInt(tokenizer.nextToken());
         
         this.largeur = width;
         this.hauteur = height;
@@ -39,10 +73,20 @@ public class Image {
         // Ignorer la ligne de valeur maximale (255)
         br.readLine();
         this.max_gray = 255;
-        int[] pixels = new int[width * height];
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = Integer.parseInt(br.readLine());
+        
+        ArrayList<Integer> pixels = new ArrayList<Integer>();
+        
+        String line;
+        
+        while ((line = br.readLine()) != null){
+            tokenizer = new StringTokenizer(line);
+            while(tokenizer.hasMoreTokens()){
+                pixels.add(Integer.parseInt(tokenizer.nextToken()));
+                
+            }
         }
+        
+        this.pixels = pixels;
 
         br.close();
         
