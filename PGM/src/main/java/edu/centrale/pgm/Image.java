@@ -98,17 +98,17 @@ public class Image {
         
     }
     
-    public void writeImage(String file_name, List pixels) throws IOException {
+    public void writeImage(String file_name, List pixels, int largeur, int hauteur) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file_name));
 
         // Écrire l'en-tête PGM
-        bw.write("P2\n# Image PGM\n" + this.largeur + " " + this.hauteur + "\n255\n");
+        bw.write("P2\n# Image PGM\n" + largeur + " " + hauteur + "\n255\n");
         
         int nb_car = 0;
 
         // Écrire les pixels
         for (int i = 0; i < pixels.size(); i++) {
-            nb_car += this.pixels.get(i).toString().length() + 1 ;
+            nb_car += pixels.get(i).toString().length() + 1 ;
             
             
             // Ajouter un retour à la ligne toutes les 70 caractères
@@ -117,7 +117,12 @@ public class Image {
                 nb_car = 0;
             }
             
-            bw.write(this.pixels.get(i) + " ");
+            if((i%largeur == 0) && (nb_car <70)){
+                bw.write("\n");
+                nb_car = 0;
+            }
+            
+            bw.write(pixels.get(i) + " ");
         }
 
         bw.close();
@@ -138,8 +143,21 @@ public class Image {
                 .map(value -> (int) ((double) value / maxValue * 255))
                 .collect(Collectors.toList());
 
+        System.out.println(normalizedHistogram);
+        
+        ArrayList<Integer> histo = new ArrayList<Integer>(Collections.nCopies(256*256, 255));
+        
+        for(int i=0; i<normalizedHistogram.size(); i++){
+            for(int j=0; j<normalizedHistogram.get(i);j++){
+                histo.set(256*256-(256-i-1)-256*j , 0);
+            }
+        }
+        System.out.println(histo);
+        
+        
+
         // Écrire l'histogramme dans une nouvelle image PGM
-        writeImage(outputPath, normalizedHistogram);
+        writeImage(outputPath, histo, 256, 256);
     }
 
     
@@ -151,6 +169,22 @@ public class Image {
                 pixels.set(i, 255);
             }
         }
+    }
+    
+    public boolean difference(Image other){
+        
+        int length = this.pixels.size();
+        ArrayList otherPixels = other.getPixels();
+        if(length != otherPixels.size()){
+            return false;
+        } else {
+            for(int i=0; i<length;i++){
+                if(pixels.get(i) != otherPixels.get(i)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     

@@ -18,5 +18,7 @@ public class PGM {
         Image test = new Image();
         test.readImage("baboon.pgm");
         System.out.println(test.getPixels());
+        test.writeImage("baboon2.pgm", test.getPixels(), test.getLargeur(), test.getHauteur());
+        test.createHistogram("baboon.pgm", "baboonHisto.pgm");
     }
 }
