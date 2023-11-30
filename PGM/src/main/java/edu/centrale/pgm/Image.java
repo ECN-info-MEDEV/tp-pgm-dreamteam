@@ -142,6 +142,8 @@ public class Image {
      *
      * @param file_name
      * @param pixels
+     * @param largeur
+     * @param hauteur
      * @throws IOException
      */
     public void writeImage(String file_name, List pixels, int largeur, int hauteur) throws IOException {
@@ -226,6 +228,11 @@ public class Image {
         }
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public boolean difference(Image other){
         
         int length = this.pixels.size();
