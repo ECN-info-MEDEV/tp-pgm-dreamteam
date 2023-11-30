@@ -162,12 +162,12 @@ public class Image {
             // Ajouter un retour à la ligne toutes les 70 caractères
             if (nb_car >= 70) {
                 bw.write("\n");
-                nb_car = 0;
+                nb_car = pixels.get(i).toString().length() + 1 ;
             }
             
             if((i%largeur == 0) && (nb_car <70)){
                 bw.write("\n");
-                nb_car = 0;
+                nb_car = pixels.get(i).toString().length() + 1 ;
             }
             
             bw.write(pixels.get(i) + " ");
@@ -182,7 +182,7 @@ public class Image {
      * @param outputPath
      * @throws IOException
      */
-    public void createHistogram(String inputPath, String outputPath) throws IOException {
+    public void createHistogram(String outputPath) throws IOException {
         // Lire l'image PGM
 
         // Calculer l'histogramme
