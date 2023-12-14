@@ -194,9 +194,9 @@ public class ImageTest {
     @Test
     public void testSeuillage(int seuil, Image image) {
         image.Seuillage(seuil);
-        flag = true;
+        boolean flag = true;
         
-
+        
     }
 
     /**
