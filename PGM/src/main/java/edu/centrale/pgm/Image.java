@@ -203,7 +203,7 @@ public class Image {
         
         for(int i=0; i<normalizedHistogram.size(); i++){
             for(int j=0; j<normalizedHistogram.get(i);j++){
-                histo.set(256*256-(256-i-1)-256*j , 0);
+                histo.set(256*256-(256-i-1)-256*j , i);
             }
         }
         System.out.println(histo);
