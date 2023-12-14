@@ -102,6 +102,7 @@ public class Image {
      *
      * @param file_name
      * @throws IOException
+     * Read image from file
      */
     public void readImage(String file_name)throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(file_name));
